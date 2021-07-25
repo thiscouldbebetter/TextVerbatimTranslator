@@ -1,0 +1,163 @@
+<html>
+
+<body>
+
+	<div id="divUi">
+
+		<h3>Text Verbatim Translator</h3>
+		<p>
+			Specify some text to translate verbatim, click the Extract button
+			to extract the unique words from it, specify the proper
+			translation mappings, then click the Translate Verbatim button
+			to translate.  Note that this only translates individual words.
+			No attempt is made to translate higher-level semantics or grammar.
+		</p>
+
+		<label>Text to Translate Verbatim:</label>
+		<br />
+		<textarea id="textareaTextToTranslate" cols="80" rows="12">
+μῆνιν ἄειδε θεὰ Πηληϊάδεω Ἀχιλῆος
+οὐλομένην, ἣ μυρί᾽ Ἀχαιοῖς ἄλγε᾽ ἔθηκε,
+πολλὰς δ᾽ ἰφθίμους ψυχὰς Ἄϊδι προΐαψεν
+ἡρώων, αὐτοὺς δὲ ἑλώρια τεῦχε κύνεσσιν
+οἰωνοῖσί τε πᾶσι, Διὸς δ᾽ ἐτελείετο βουλή,
+ἐξ οὗ δὴ τὰ πρῶτα διαστήτην ἐρίσαντε
+Ἀτρεΐδης τε ἄναξ ἀνδρῶν καὶ δῖος Ἀχιλλεύς.
+τίς τ᾽ ἄρ σφωε θεῶν ἔριδι ξυνέηκε μάχεσθαι;
+Λητοῦς καὶ Διὸς υἱός: ὃ γὰρ βασιλῆϊ χολωθεὶς
+νοῦσον ἀνὰ στρατὸν ὄρσε κακήν, ὀλέκοντο δὲ λαοί,
+οὕνεκα τὸν Χρύσην ἠτίμασεν ἀρητῆρα
+Ἀτρεΐδης: ὃ γὰρ ἦλθε θοὰς ἐπὶ νῆας Ἀχαιῶν
+λυσόμενός τε θύγατρα φέρων τ᾽ ἀπερείσι᾽ ἄποινα,
+στέμματ᾽ ἔχων ἐν χερσὶν ἑκηβόλου Ἀπόλλωνος
+χρυσέῳ ἀνὰ σκήπτρῳ, καὶ λίσσετο πάντας Ἀχαιούς,
+Ἀτρεΐδα δὲ μάλιστα δύω, κοσμήτορε λαῶν:
+Ἀτρεΐδαι τε καὶ ἄλλοι ἐϋκνήμιδες Ἀχαιοί,
+ὑμῖν μὲν θεοὶ δοῖεν Ὀλύμπια δώματ᾽ ἔχοντες
+ἐκπέρσαι Πριάμοιο πόλιν, εὖ δ᾽ οἴκαδ᾽ ἱκέσθαι:
+παῖδα δ᾽ ἐμοὶ λύσαιτε φίλην, τὰ δ᾽ ἄποινα δέχεσθαι,
+ἁζόμενοι Διὸς υἱὸν ἑκηβόλον Ἀπόλλωνα.
+		</textarea>
+		<br />
+
+		<button onclick="buttonExtractUniqueWords_Clicked();">
+			Extract Unique Words
+		</button>
+		<input id="checkboxSortWords" type="checkbox" />
+		<label>Sort Words Alphabetically</label>
+		<br />
+
+		<label>Word Translation Mappings:</label>
+		<br />
+		<textarea id="textareaWordMappings" cols="80" rows="12">
+		</textarea>
+		<br />
+
+		<button onclick="buttonTranslate_Clicked();">Translate Verbatim</button>
+		<br />
+
+		<label>Text Translated Verbatim:</label>
+		<br />
+		<textarea id="textareaTextTranslated" cols="80" rows="12">
+		</textarea>
+		<br />
+
+	</div>
+
+<script type="text/javascript">
+
+function buttonExtractUniqueWords_Clicked()
+{
+	var d = document;
+	var textareaTextToTranslate =
+		d.getElementById("textareaTextToTranslate");
+	var textareaWordMappings =
+		d.getElementById("textareaWordMappings");
+	var textareaTextTranslated =
+		d.getElementById("textareaTextTranslated");
+	var checkboxSortWords = d.getElementById("checkboxSortWords");
+
+	var textToTranslate = textareaTextToTranslate.value;
+
+	var whitespaceCharsAsRegex = /[ \t\r\n.,;:'"]+/;
+	var wordsToTranslate = textToTranslate.split(whitespaceCharsAsRegex);
+
+	var wordsToTranslateUnique = [];
+	var wordsToTranslateUniqueAsLookup = new Map();
+
+	for (var i = 0; i < wordsToTranslate.length; i++)
+	{
+		var wordToTranslate = wordsToTranslate[i];
+		if (wordToTranslate.length > 0)
+		{
+			var wordToTranslateLowercased = wordToTranslate.toLowerCase();
+			var hasWordAlreadyBeenSeen =
+				wordsToTranslateUniqueAsLookup.has(wordToTranslateLowercased);
+			if (hasWordAlreadyBeenSeen == false)
+			{
+				wordsToTranslateUnique.push(wordToTranslateLowercased);
+				wordsToTranslateUniqueAsLookup.set
+				(
+					wordToTranslateLowercased, null
+				);
+			}
+		}
+	}
+
+	var newline = "\n";
+	var wordMappingsAsStrings =
+		wordsToTranslateUnique.map(x => x + newline + x + newline);
+
+	var shouldSortWords = checkboxSortWords.checked;
+	if (shouldSortWords)
+	{
+		wordMappingsAsStrings.sort();
+	}
+
+	var wordMappingsAsString = wordMappingsAsStrings.join(newline);
+
+	textareaWordMappings.value = wordMappingsAsString;
+}
+
+function buttonTranslate_Clicked()
+{
+	var d = document;
+	var textareaTextToTranslate =
+		d.getElementById("textareaTextToTranslate");
+	var textareaWordMappings =
+		d.getElementById("textareaWordMappings");
+	var textareaTextTranslated =
+		d.getElementById("textareaTextTranslated");
+
+	var mappingsAsString =
+		textareaWordMappings.value;
+	var newline = "\n";
+	var mappingsAsStrings =
+		mappingsAsString.split(newline + newline);
+	var mappingsAsStringPairs =
+		mappingsAsStrings.map(x => x.split(newline));
+
+	var textToTranslate = textareaTextToTranslate.value;
+	var textTranslated = textToTranslate;
+	for (var i = 0; i < mappingsAsStringPairs.length; i++)
+	{
+		var mappingAsStringPair = mappingsAsStringPairs[i];
+		var wordToTranslate = mappingAsStringPair[0];
+		var wordTranslated = mappingAsStringPair[1];
+		textTranslated = textTranslated.split
+		(
+			wordToTranslate
+		).join
+		(
+			wordTranslated
+		);
+	}
+
+	textareaTextTranslated.value = textTranslated;
+}
+
+</script>
+
+</body>
+
+</html>
