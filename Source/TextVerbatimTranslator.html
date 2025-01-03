@@ -13,54 +13,37 @@
 			No attempt is made to translate higher-level semantics or grammar.
 		</p>
 
-		<label>Text to Translate Verbatim:</label>
-		<br />
-		<textarea id="textareaTextToTranslate" cols="80" rows="12">
-μῆνιν ἄειδε θεὰ Πηληϊάδεω Ἀχιλῆος
-οὐλομένην, ἣ μυρί᾽ Ἀχαιοῖς ἄλγε᾽ ἔθηκε,
-πολλὰς δ᾽ ἰφθίμους ψυχὰς Ἄϊδι προΐαψεν
-ἡρώων, αὐτοὺς δὲ ἑλώρια τεῦχε κύνεσσιν
-οἰωνοῖσί τε πᾶσι, Διὸς δ᾽ ἐτελείετο βουλή,
-ἐξ οὗ δὴ τὰ πρῶτα διαστήτην ἐρίσαντε
-Ἀτρεΐδης τε ἄναξ ἀνδρῶν καὶ δῖος Ἀχιλλεύς.
-τίς τ᾽ ἄρ σφωε θεῶν ἔριδι ξυνέηκε μάχεσθαι;
-Λητοῦς καὶ Διὸς υἱός: ὃ γὰρ βασιλῆϊ χολωθεὶς
-νοῦσον ἀνὰ στρατὸν ὄρσε κακήν, ὀλέκοντο δὲ λαοί,
-οὕνεκα τὸν Χρύσην ἠτίμασεν ἀρητῆρα
-Ἀτρεΐδης: ὃ γὰρ ἦλθε θοὰς ἐπὶ νῆας Ἀχαιῶν
-λυσόμενός τε θύγατρα φέρων τ᾽ ἀπερείσι᾽ ἄποινα,
-στέμματ᾽ ἔχων ἐν χερσὶν ἑκηβόλου Ἀπόλλωνος
-χρυσέῳ ἀνὰ σκήπτρῳ, καὶ λίσσετο πάντας Ἀχαιούς,
-Ἀτρεΐδα δὲ μάλιστα δύω, κοσμήτορε λαῶν:
-Ἀτρεΐδαι τε καὶ ἄλλοι ἐϋκνήμιδες Ἀχαιοί,
-ὑμῖν μὲν θεοὶ δοῖεν Ὀλύμπια δώματ᾽ ἔχοντες
-ἐκπέρσαι Πριάμοιο πόλιν, εὖ δ᾽ οἴκαδ᾽ ἱκέσθαι:
-παῖδα δ᾽ ἐμοὶ λύσαιτε φίλην, τὰ δ᾽ ἄποινα δέχεσθαι,
-ἁζόμενοι Διὸς υἱὸν ἑκηβόλον Ἀπόλλωνα.
-		</textarea>
-		<br />
+		<div>
+			<label>Text to Translate Verbatim:</label>
+			<input type="file" onchange="inputFileToTranslate_Changed(this);"></input>
+			<button onclick="buttonTextToTranslateLoadDemo_Clicked();">Load Demo</button>
+			<br />
+			<textarea id="textareaTextToTranslate" cols="80" rows="12"></textarea>
+		</div>
 
-		<button onclick="buttonExtractUniqueWords_Clicked();">
-			Extract Unique Words
-		</button>
-		<input id="checkboxSortWords" type="checkbox" />
-		<label>Sort Words Alphabetically</label>
-		<br />
+		<div>
+			<button onclick="buttonExtractUniqueWords_Clicked();">
+				Extract Unique Words
+			</button>
+			<input id="checkboxSortWords" type="checkbox" />
+			<label>Sort Words Alphabetically</label>
+		</div>
 
-		<label>Word Translation Mappings:</label>
-		<br />
-		<textarea id="textareaWordMappings" cols="80" rows="12">
-		</textarea>
-		<br />
+		<div>
+			<label>Word-by-Word Translations ("Dictionary"/"Lexicon"):</label>			
+			<br />
+			<textarea id="textareaWordMappings" cols="80" rows="12"></textarea>
+		</div>
 
-		<button onclick="buttonTranslate_Clicked();">Translate Verbatim</button>
-		<br />
+		<div>
+			<button onclick="buttonTranslate_Clicked();">Translate Verbatim</button>
+		</div>
 
-		<label>Text Translated Verbatim:</label>
-		<br />
-		<textarea id="textareaTextTranslated" cols="80" rows="12">
-		</textarea>
-		<br />
+		<div>
+			<label>Text Translated Verbatim:</label>
+			<br />
+			<textarea id="textareaTextTranslated" cols="80" rows="12"></textarea>
+		</div>
 
 	</div>
 
@@ -119,6 +102,156 @@ function buttonExtractUniqueWords_Clicked()
 	textareaWordMappings.value = wordMappingsAsString;
 }
 
+function buttonTextToTranslateLoadDemo_Clicked()
+{
+	var linesToTranslate =
+	[
+		"Acostado en mi cama,",
+		"oigo el tictac del reloj y pienso en ti.",
+		"Atrapado en círculos,",
+		"la confusión no es nada nuevo.",
+		"Retrospectiva: noches cálidas,",
+		"casi dejadas atrás.",
+		"Maleta de recuerdos,",
+		"una y otra...",
+		"",
+		"A veces me imaginas,",
+		"estoy caminando demasiado lejos por delante.",
+		"Me estás llamando;",
+		"no puedo escuchar lo que has dicho.",
+		"Entonces dices, 'Ve despacio';",
+		"me quedo atrás.",
+		"El segundero se desenrolla.",
+		"",
+		"Después de que mi imagen se desvanece",
+		"y la oscuridad se ha vuelto gris,",
+		"mirando a través de las ventanas,",
+		"te preguntas si estoy bien.",
+		"Secretos robados",
+		"de lo más profundo.",
+		"El tambor suena a destiempo.",
+		"",
+		"Si estás perdido,",
+		"puedes mirar",
+		"y me encontrarás,",
+		"una y otra vez.",
+		"Si te caes,",
+		"te atraparé,",
+		"te estaré esperando,",
+		"una y otra vez.",
+	];
+	
+	var newline = "\n";
+	var textToTranslate = linesToTranslate.join(newline);
+	
+	var d = document;
+	var textareaTextToTranslate =
+		d.getElementById("textareaTextToTranslate");
+	textareaTextToTranslate.value = textToTranslate;
+	
+	var wordByWordTranslationsAsStrings =
+	[
+		"acostado=lying",
+		"en=in",
+		"mi=my",
+		"cama=bed",
+		"oigo=I hear",
+		"el=the",
+		"tictac=tick",
+		"del=of the",
+		"reloj=clock",
+		"y=and",
+		"pienso=I think",
+		"ti=you",
+		"atrapado=trapped",
+		"círculos=circles",
+		"la=the",
+		"confusión=confusion",
+		"no=not",
+		"es=is",
+		"nada=nothing",
+		"nuevo=new",
+		"retrospectiva=flashback",
+		"noches=nights",
+		"cálidas=warm",
+		"casi=almost",
+		"dejadas=left",
+		"atrás=behind",
+		"maleta=suitcase",
+		"de=of",
+		"recuerdos=memories",
+		"una=one",
+		"otra=another",
+		"a=at",
+		"veces=times",
+		"me=me",
+		"imaginas=you imagine",
+		"estoy=I am",
+		"caminando=walking",
+		"demasiado=too",
+		"lejos=far",
+		"por=for",
+		"delante=ahead",
+		"estás=you are",
+		"llamando=calling",
+		"puedo=I can",
+		"escuchar=to hear",
+		"lo=it",
+		"que=that",
+		"has=you have",
+		"dicho=said",
+		"entonces=then",
+		"dices=you say",
+		"ve=go",
+		"despacio=slow",
+		"quedo=I stay",
+		"segundero=second hand",
+		"se=itself",
+		"desenrolla=unwinds",
+		"después=after",
+		"imagen=picture",
+		"desvanece=fades",
+		"oscuridad=darkness",
+		"ha=has",
+		"vuelto=changed",
+		"gris=gray",
+		"mirando=watching",
+		"través=through",
+		"las=the",
+		"ventanas=windows",
+		"te=you",
+		"preguntas=you ask",
+		"si=if",
+		"bien=well",
+		"secretos=secrets",
+		"robados=stolen",
+		"más=most",
+		"profundo=deep",
+		"tambor=drum",
+		"suena=sounds",
+		"destiempo=out of time",
+		"perdido=lost",
+		"puedes=you can",
+		"mirar=to look",
+		"encontrarás=you will find",
+		"vez=time",
+		"caes=fall",
+		"atraparé=I will catch",
+		"estaré=I will be",
+		"esperando=waiting"
+	];
+
+	var wordByWordTranslationsAsLines =
+		wordByWordTranslationsAsStrings.map
+		(
+			x => x.split("=").join(newline)
+		).join(newline + newline);
+
+	var textareaWordMappings =
+		d.getElementById("textareaWordMappings");
+	textareaWordMappings.value = wordByWordTranslationsAsLines
+}
+
 function buttonTranslate_Clicked()
 {
 	var d = document;
@@ -132,28 +265,71 @@ function buttonTranslate_Clicked()
 	var mappingsAsString =
 		textareaWordMappings.value;
 	var newline = "\n";
+	var blankLine = newline + newline;
 	var mappingsAsStrings =
-		mappingsAsString.split(newline + newline);
+		mappingsAsString.split(blankLine);
 	var mappingsAsStringPairs =
 		mappingsAsStrings.map(x => x.split(newline));
+	var translationsByWordToTranslate = new Map(mappingsAsStringPairs);
 
 	var textToTranslate = textareaTextToTranslate.value;
-	var textTranslated = textToTranslate;
-	for (var i = 0; i < mappingsAsStringPairs.length; i++)
+	var tokensToTranslate = [];
+	var tokenCurrent = "";
+	var charsForSpaceAndPunctuation = " \t\r\n,.?!-:;/()[]{}'\""
+	for (var i = 0; i < textToTranslate.length; i++)
 	{
-		var mappingAsStringPair = mappingsAsStringPairs[i];
-		var wordToTranslate = mappingAsStringPair[0];
-		var wordTranslated = mappingAsStringPair[1];
-		textTranslated = textTranslated.split
-		(
-			wordToTranslate
-		).join
-		(
-			wordTranslated
-		);
+		var charCurrent = textToTranslate[i];
+		var charCurrentIsSpaceOrPunctuation =
+			(charsForSpaceAndPunctuation.indexOf(charCurrent) >= 0);
+		if (charCurrentIsSpaceOrPunctuation)
+		{
+			tokensToTranslate.push(tokenCurrent);
+			tokenCurrent = "";
+			tokensToTranslate.push(charCurrent);
+		}
+		else
+		{
+			tokenCurrent += charCurrent;
+		}
+	}
+	
+	var tokensTranslatedSoFar = [];
+	
+	for (var i = 0; i < tokensToTranslate.length; i++)
+	{
+		var tokenToTranslate = tokensToTranslate[i]
+		var tokenToTranslateLowercased = tokenToTranslate.toLowerCase();
+		var tokenTranslated =
+			translationsByWordToTranslate.get(tokenToTranslateLowercased);
+		if (tokenTranslated == null)
+		{
+			tokenTranslated = tokenToTranslate;
+		}
+		tokensTranslatedSoFar.push(tokenTranslated);
+		// todo - Match casing in original.
 	}
 
+	var textTranslated = tokensTranslatedSoFar.join("");
+
 	textareaTextTranslated.value = textTranslated;
+}
+
+function inputFileToTranslate_Changed(inputFileToTranslate)
+{
+	var file = inputFileToTranslate.files[0];
+	if (file != null)
+	{
+		var fileReader = new FileReader();
+		fileReader.onload = (event) =>
+		{
+			var fileContentsAsText = event.target.result;
+			var d = document;
+			var textareaTextToTranslate =
+				d.getElementById("textareaTextToTranslate");
+			textareaTextToTranslate.value = fileContentsAsText;
+		};
+		fileReader.readAsText(file);
+	}
 }
 
 </script>
